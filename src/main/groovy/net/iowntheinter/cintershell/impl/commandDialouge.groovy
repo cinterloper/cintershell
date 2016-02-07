@@ -56,11 +56,11 @@ class commandDialouge {
     def hdlr = { CommandProcess pr ->
         def session = pr.session() as Session
         session.put('DiagCounter', 0)
+        session.put('Args', pr.args())
         session.put('ansAr', ansAr)
         session.put('QuestionsResponses', QuestionsResponses)
         QuestionsLoader(pr, { QuestionLoaderContext  ->
             def process = QuestionLoaderContext.process as CommandProcess
-
             def Questions = QuestionLoaderContext.questions as Map
             def QuestionKeySet = QuestionLoaderContext.questions.keySet()
             session.put('Questions', Questions)
