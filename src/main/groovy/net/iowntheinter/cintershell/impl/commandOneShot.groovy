@@ -54,7 +54,7 @@ class commandOneShot {
         session.put('DiagCounter', 0)
         session.put('Args', pr.args())
         session.put('ansAr', ansAr)
-        session.put('QuestionsResponses', QuestionsResponses)
+        session.put('validationHdlr', validationHdlr)
         command(pr, validationHdlr, finish)
     }
 
