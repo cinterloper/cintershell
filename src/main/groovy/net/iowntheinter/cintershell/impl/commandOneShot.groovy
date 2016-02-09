@@ -50,12 +50,13 @@ class commandOneShot {
 
 
     def hdlr = { CommandProcess pr ->
+        def v = this.getVertx()
         def session = pr.session() as Session
         session.put('DiagCounter', 0)
         session.put('Args', pr.args())
         session.put('ansAr', ansAr)
         session.put('validationHdlr', validationHdlr)
-        command([v:vertx,p:pr,t:this], finish)
+        command([v:vertx,p:pr,v:vertx], finish)
     }
 
 }
