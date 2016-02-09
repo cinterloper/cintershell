@@ -90,7 +90,6 @@ class commandDialouge {
                             if (InnerDiagCtr > Questions.size() - 1) {
                                 process.write('\n collected: ' + session.get('ansAr'))
                                 finish([v: vertx, p: process, d: session.get('ansAr')])
-                                ctx.process.end()
                             } else {
                                 ctx.process.write('\n' + ANSI_CYAN + Questions[QuestionKeySet[InnerDiagCtr]] + ANSI_RESET)
                             }
