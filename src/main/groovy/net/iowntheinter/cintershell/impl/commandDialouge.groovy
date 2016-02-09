@@ -68,7 +68,8 @@ class commandDialouge {
 
             def buff = Buffer.buffer();
             process.write(intro)
-            process.setStdin({ keyUp ->  // on each key press, fire this
+
+            process.stdinHandler({ keyUp ->  // on each key press, fire this
                 if (keyUp != '\n' && keyUp != '\r') {
                     buff.appendString(keyUp)
                     process.write(keyUp)
