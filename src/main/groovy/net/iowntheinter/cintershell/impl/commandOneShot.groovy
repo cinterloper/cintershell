@@ -55,7 +55,7 @@ class commandOneShot {
         session.put('Args', pr.args())
         session.put('ansAr', ansAr)
         session.put('validationHdlr', validationHdlr)
-        command([v:vertx,p:pr], validationHdlr)
+        command([v:vertx,p:pr,t:this], finish)
     }
 
 }
