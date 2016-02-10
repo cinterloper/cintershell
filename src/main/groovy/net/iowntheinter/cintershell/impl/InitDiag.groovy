@@ -44,5 +44,6 @@ class InitDiag {
         def eb = v.eventBus();
         eb.send('questions', d)
         println("end of the line:${d}")
+        p.end()
     }
 }
