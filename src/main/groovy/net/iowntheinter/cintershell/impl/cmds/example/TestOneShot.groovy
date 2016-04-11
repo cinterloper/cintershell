@@ -9,7 +9,7 @@ import io.vertx.ext.shell.command.CommandProcess
  */
 class TestOneShot {
 
-    static def INTRO = new String(" this is a sample command \n\n")
+    static String INTRO = new String(" this is a sample command \n\n")
     //you can actually rewrite the reactions through the process handle when questions is processed
 
 
