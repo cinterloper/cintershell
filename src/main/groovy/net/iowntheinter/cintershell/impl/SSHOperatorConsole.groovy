@@ -9,8 +9,8 @@ import io.vertx.ext.shell.ShellServiceOptions
 import io.vertx.ext.auth.shiro.ShiroAuthOptions
 import io.vertx.ext.shell.ShellServiceOptionsConverter
 import io.vertx.ext.shell.term.SSHTermOptions
-import io.vertx.groovy.core.Vertx
-import io.vertx.groovy.ext.shell.ShellService
+import io.vertx.core.Vertx
+import io.vertx.ext.shell.ShellService
 import io.vertx.ext.auth.shiro.LDAPProviderConstants
 
 /**
@@ -69,8 +69,9 @@ class SSHOperatorConsole {
             }
         }
         joptions.put('welcomeMessage', ANSI_RED + shadowmsg + ANSI_RESET)
-
-        def service = ShellService.create(vertx, joptions.getMap())
+        def ShellServiceOptions sso = new ShellServiceOptions();
+        ShellServiceOptionsConverter.fromJson(joptions,sso)
+        def service = ShellService.create(vertx,sso)
 
         try {
             service.start({ r ->

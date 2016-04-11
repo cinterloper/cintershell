@@ -1,7 +1,7 @@
 package net.iowntheinter.cintershell.impl.cmds
 
-import io.vertx.groovy.core.Vertx
-import io.vertx.groovy.ext.shell.command.CommandProcess
+import io.vertx.core.Vertx
+import io.vertx.ext.shell.command.CommandProcess
 
 /**
  * Created by grant on 11/17/15.

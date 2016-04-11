@@ -3,11 +3,11 @@ package net.iowntheinter.cintershell.impl
 import io.vertx.core.buffer.Buffer
 import io.vertx.core.logging.Logger
 import io.vertx.core.logging.LoggerFactory
-import io.vertx.groovy.core.Vertx
-import io.vertx.groovy.ext.shell.command.CommandBuilder
-import io.vertx.groovy.ext.shell.command.CommandProcess
-import io.vertx.groovy.ext.shell.command.CommandRegistry
-import io.vertx.groovy.ext.shell.session.Session
+import io.vertx.core.Vertx
+import io.vertx.ext.shell.command.CommandBuilder
+import io.vertx.ext.shell.command.CommandProcess
+import io.vertx.ext.shell.command.CommandRegistry
+import io.vertx.ext.shell.session.Session
 
 //docs: leave refrence (url or magnet link) to key:documentation
 //have ? fetch the dox and display them

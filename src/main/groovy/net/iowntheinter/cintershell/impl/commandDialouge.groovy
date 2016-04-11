@@ -1,15 +1,15 @@
 package net.iowntheinter.cintershell.impl
 
-import io.vertx.groovy.core.Vertx
+import io.vertx.core.Vertx
 import io.vertx.core.buffer.Buffer
 import io.vertx.core.logging.Logger
 import io.vertx.core.logging.LoggerFactory
 import io.vertx.core.spi.launcher.Command
-import io.vertx.groovy.ext.shell.command.CommandProcess
-import io.vertx.groovy.ext.shell.session.Session
-import io.vertx.groovy.ext.shell.command.CommandBuilder
-import io.vertx.groovy.ext.shell.system.Process
-import io.vertx.groovy.ext.shell.command.CommandRegistry
+import io.vertx.ext.shell.command.CommandProcess
+import io.vertx.ext.shell.session.Session
+import io.vertx.ext.shell.command.CommandBuilder
+import io.vertx.ext.shell.system.Process
+import io.vertx.ext.shell.command.CommandRegistry
 
 
 import javax.xml.ws.AsyncHandler

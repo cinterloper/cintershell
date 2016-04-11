@@ -1,7 +1,8 @@
 package net.iowntheinter.cintershell.impl.cmds.example
 
-import io.vertx.groovy.core.Vertx
-import io.vertx.groovy.ext.shell.command.CommandProcess
+import io.vertx.core.Vertx
+import io.vertx.core.json.JsonObject
+import io.vertx.ext.shell.command.CommandProcess
 
 /**
  * Created by grant on 11/17/15.
@@ -13,11 +14,11 @@ class TestDiag {
 
 
     public static Closure QUESTIONS = { CommandProcess process, Closure cb ->
-        cb([process:process,  questions:
+        cb([process: process, questions:
 
-                      [ "username" : "what is your username? ",
-                        "pubkey"   : "what is your public key? ",
-                        "sysdomain": "what is the system domain? "]
+                ["username" : "what is your username? ",
+                 "pubkey"   : "what is your public key? ",
+                 "sysdomain": "what is the system domain? "]
         ])
     }
 
@@ -42,7 +43,7 @@ class TestDiag {
         def p = ctx.p as CommandProcess
         def d = ctx.d as Map
         def eb = v.eventBus();
-        eb.send('questions', d)
+        eb.send('questions', new JsonObject(d))
         println("end of the line:${d}")
         p.end()
     }

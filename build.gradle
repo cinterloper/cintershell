@@ -29,7 +29,7 @@ mainClassName = 'io.vertx.core.Launcher'
 shadowJar {
     classifier = 'fat'
     manifest {
-        attributes 'Main-Verticle': 'cintershell_main.groovy'
+        attributes 'Main-Verticle': 'cintershellExample'
     }
     mergeServiceFiles {
         include 'META-INF/services/io.vertx.core.spi.VerticleFactory'
