@@ -1,4 +1,4 @@
-package net.iowntheinter.cintershell.impl
+package net.iowntheinter.cintershell.impl.cmds.example
 
 import io.vertx.groovy.core.Vertx
 import io.vertx.groovy.ext.shell.command.CommandProcess
@@ -6,7 +6,7 @@ import io.vertx.groovy.ext.shell.command.CommandProcess
 /**
  * Created by grant on 11/17/15.
  */
-class InitDiag {
+class TestDiag {
 
     static def INTRO = new String(" this is a sample command \n\n")
     //you can actually rewrite the reactions through the process handle when questions is processed

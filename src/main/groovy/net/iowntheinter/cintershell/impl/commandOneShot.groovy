@@ -28,18 +28,18 @@ class commandOneShot {
 
     Vertx vertx
     Closure command
-    Map validationHdlr;
+    Map validationHdlrs;
     Map ansAr = [:];
     Closure finish
     Logger log
     String intro = "";
 
-    commandOneShot(v, String name, String intr = "", Closure cmd, Map respHdl, Closure finishAction) {
+    commandOneShot(v, String name, String intr = "", Closure cmd, Map argValidation, Closure finishAction) {
         vertx = v as Vertx
-        command = cmd  //this is a hack, need to figure out a clean way to get the inital key set
+        command = cmd
         finish = finishAction;
         intro = intr
-        validationHdlr = respHdl;
+        validationHdlrs = argValidation;
         def builder = CommandBuilder.command(name)
         builder.processHandler(hdlr)
         // Register the command
@@ -47,7 +47,7 @@ class commandOneShot {
         registry.registerCommand(builder.build(vertx))
         log = LoggerFactory.getLogger('net.iowntheinter.cintershell.impl.commandOneShot')
     }
-
+    def validata = {}
 
     def hdlr = { CommandProcess pr ->
         def v = this.getVertx()
@@ -55,7 +55,7 @@ class commandOneShot {
         session.put('DiagCounter', 0)
         session.put('Args', pr.args())
         session.put('ansAr', ansAr)
-        session.put('validationHdlr', validationHdlr)
+        session.put('validationHandlers', validationHdlrs)
         command([v:v,p:pr], finish)
     }
 

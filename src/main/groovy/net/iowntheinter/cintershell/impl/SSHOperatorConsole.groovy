@@ -21,16 +21,17 @@ class SSHOperatorConsole {
     def vertx
     def logger = LoggerFactory.getLogger("SSHOperatorConsole")
     def sshOpts = new SSHTermOptions()
-    def shadowmsg;
+    def shadowmsg
+    def config
     public static final String ANSI_RED = "\u001B[31m";
     public static final String ANSI_RESET = "\u001B[0m";
 
     SSHOperatorConsole(vx, port) {
         vertx = vx as Vertx
+        config = vertx.getOrCreateContext().config()
         logger.info("attermpting to start ssh service on ${port}")
         def JShiroOptions = new JsonObject()
-
-        JShiroOptions.put("type", ShiroAuthRealmType.LDAP).put("provider","shiro")
+        JShiroOptions.put("type", ShiroAuthRealmType.LDAP).put("provider", "shiro")
                 .put("config", new JsonObject()
                 .put(LDAPProviderConstants.LDAP_URL, "ldap://localhost:10389")
                 .put(LDAPProviderConstants.LDAP_USER_DN_TEMPLATE_FIELD, "uid={0},ou=system")
@@ -42,32 +43,42 @@ class SSHOperatorConsole {
                         put("port", port).
                         put("keyPairOptions", new JsonObject().
                                 put("path", "keystore.jks").
-                                put("password", "wibble")).put("authOptions",JShiroOptions));
-
+                                put("password", "wibble")).put("authOptions", JShiroOptions));
 
         try {
-            def bfile = "shadow-banner.txt"
+            def bfile = "cintershell-branding.txt"
             def classloader = (URLClassLoader) (Thread.currentThread().getContextClassLoader())
             def bpth = classloader.findResource(bfile);
             logger.info("bfile ref: ${bpth}\n")
 
             shadowmsg = classloader.getResourceAsStream(bfile).getText()
             logger.info("${ANSI_RED + shadowmsg + ANSI_RESET}")
-        } catch (e) {
-            logger.error("could not get banner, ${e}")
-            shadowmsg = "Welcome to cintershell \n"
-        }
-        joptions.put('welcomeMessage',ANSI_RED + shadowmsg + ANSI_RESET)
+        } catch (nobranding) {
+            logger.error("no branding detected, ${nobranding}")
+            try {
+                def bfile = "cintershell-banner.txt"
+                def classloader = (URLClassLoader) (Thread.currentThread().getContextClassLoader())
+                def bpth = classloader.findResource(bfile);
+                logger.info("bfile ref: ${bpth}\n")
 
-        def service = ShellService.create(vertx,joptions.getMap())
+                shadowmsg = classloader.getResourceAsStream(bfile).getText()
+                logger.info("${ANSI_RED + shadowmsg + ANSI_RESET}")
+            } catch (e) {
+                logger.error("could not get banner, ${e}")
+                shadowmsg = "Welcome to cintershell \n"
+            }
+        }
+        joptions.put('welcomeMessage', ANSI_RED + shadowmsg + ANSI_RESET)
+
+        def service = ShellService.create(vertx, joptions.getMap())
 
         try {
-            service.start({  r ->
+            service.start({ r ->
                 if (r.succeeded()) {
-                    logger.info("i think shell service is running:${r.result()}")
+                    logger.info("shell service is running on ${port}:${r.result()}")
                     logger.info(service)
                 } else {
-                    logger.error("ssh may not be running: ${r.cause()}")
+                    logger.error("shell service may not be running: ${r.cause()}")
                 }
             })
         } catch (e) {
