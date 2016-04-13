@@ -3,11 +3,11 @@ package net.iowntheinter.cintershell.impl
 import io.vertx.core.buffer.Buffer
 import io.vertx.core.logging.Logger
 import io.vertx.core.logging.LoggerFactory
-import io.vertx.groovy.core.Vertx
-import io.vertx.groovy.ext.shell.command.CommandBuilder
-import io.vertx.groovy.ext.shell.command.CommandProcess
-import io.vertx.groovy.ext.shell.command.CommandRegistry
-import io.vertx.groovy.ext.shell.session.Session
+import io.vertx.core.Vertx
+import io.vertx.ext.shell.command.CommandBuilder
+import io.vertx.ext.shell.command.CommandProcess
+import io.vertx.ext.shell.command.CommandRegistry
+import io.vertx.ext.shell.session.Session
 
 //docs: leave refrence (url or magnet link) to key:documentation
 //have ? fetch the dox and display them
@@ -28,18 +28,18 @@ class commandOneShot {
 
     Vertx vertx
     Closure command
-    Map validationHdlr;
+    Map validationHdlrs;
     Map ansAr = [:];
     Closure finish
     Logger log
     String intro = "";
 
-    commandOneShot(v, String name, String intr = "", Closure cmd, Map respHdl, Closure finishAction) {
+    commandOneShot(v, String name, String intr = "", Closure cmd, Map argValidation, Closure finishAction) {
         vertx = v as Vertx
-        command = cmd  //this is a hack, need to figure out a clean way to get the inital key set
+        command = cmd
         finish = finishAction;
         intro = intr
-        validationHdlr = respHdl;
+        validationHdlrs = argValidation;
         def builder = CommandBuilder.command(name)
         builder.processHandler(hdlr)
         // Register the command
@@ -47,7 +47,7 @@ class commandOneShot {
         registry.registerCommand(builder.build(vertx))
         log = LoggerFactory.getLogger('net.iowntheinter.cintershell.impl.commandOneShot')
     }
-
+    def validata = {}
 
     def hdlr = { CommandProcess pr ->
         def v = this.getVertx()
@@ -55,7 +55,7 @@ class commandOneShot {
         session.put('DiagCounter', 0)
         session.put('Args', pr.args())
         session.put('ansAr', ansAr)
-        session.put('validationHdlr', validationHdlr)
+        session.put('validationHandlers', validationHdlrs)
         command([v:v,p:pr], finish)
     }
 
