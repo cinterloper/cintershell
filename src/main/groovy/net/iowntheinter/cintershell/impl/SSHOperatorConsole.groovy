@@ -46,7 +46,7 @@ class SSHOperatorConsole {
                                 put("password", "wibble")).put("authOptions", JShiroOptions));
 
         try {
-            def bfile = "cintershell-branding.txt"
+            def bfile = "_branding.txt"
             def classloader = (URLClassLoader) (Thread.currentThread().getContextClassLoader())
             def bpth = classloader.findResource(bfile);
             logger.info("bfile ref: ${bpth}\n")
