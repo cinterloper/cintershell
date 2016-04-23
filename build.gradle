@@ -3,14 +3,58 @@ plugins {
     id 'groovy'
     id 'application'
     id 'com.github.johnrengelman.shadow' version '1.2.2'
+    id 'maven-publish'
 }
+def AWS_MVN_BUCKET=System.getenv("AWS_MVN_BUCKET")
+def AWS_DEFAULT_REGION = System.getenv("AWS_DEFAULT_REGION")
+def AWS_ACCESS_KEY_ID = System.getenv("AWS_ACCESS_KEY_ID")
+def AWS_SECRET_ACCESS_KEY = System.getenv("AWS_SECRET_ACCESS_KEY")
+
 
 repositories {
     jcenter()
     maven {
         url = 'https://oss.sonatype.org/content/repositories/snapshots/'
     }
+ if(AWS_MVN_BUCKET && !AWS_MVN_BUCKET.allWhitespace)
+  {
+     maven {
+        url "s3://$AWS_MVN_BUCKET/maven2"
+        credentials(AwsCredentials) {
+            accessKey AWS_ACCESS_KEY_ID
+            secretKey AWS_SECRET_ACCESS_KEY
+        }
+      }
+  }
+
 }
+
+publishing {
+    repositories {
+        maven {
+            url "file:///tmp/maven-repo"
+        }
+        if (AWS_MVN_BUCKET && !AWS_MVN_BUCKET.allWhitespace) {
+            maven {
+                url "s3://$AWS_MVN_BUCKET/maven2"
+                credentials(AwsCredentials) {
+                    accessKey AWS_ACCESS_KEY_ID
+                    secretKey AWS_SECRET_ACCESS_KEY
+                }
+            }
+        }
+    }
+
+    publications {
+        mavenJava(MavenPublication) {
+            groupId 'net.iowntheinter'
+            artifactId 'cintershell'
+            version '3.2.1'
+            from components.java
+        }
+    }
+}
+
 
 version = '3.2.1'
 sourceCompatibility = '1.8'
