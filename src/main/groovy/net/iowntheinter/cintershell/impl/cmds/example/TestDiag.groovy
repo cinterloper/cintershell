@@ -14,6 +14,7 @@ class TestDiag {
 
 
     public static Closure QUESTIONS = { CommandProcess process, Closure cb ->
+
         cb([process: process, questions:
 
                 ["username" : "what is your username? ",
