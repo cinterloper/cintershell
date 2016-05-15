@@ -9,7 +9,7 @@ import io.vertx.ext.auth.shiro.ShiroAuthOptions
 import io.vertx.ext.auth.shiro.ShiroAuthRealmType
 import io.vertx.ext.shell.ShellServiceOptions
 import io.vertx.ext.shell.ShellServiceOptionsConverter
-import net.iowntheinter.cintershell.impl.SSHOperatorConsole
+import net.iowntheinter.cintershell.impl.OperatorConsole as SSHOperatorConsole
 import net.iowntheinter.cintershell.impl.commandDialouge
 import net.iowntheinter.cintershell.impl.cmds.example.TestDiag
 import net.iowntheinter.cintershell.impl.commandOneShot

@@ -59,6 +59,7 @@ class commandDialouge {
         session.put('Args', pr.args())
         session.put('ansAr', ansAr)
         session.put('QuestionsResponses', QuestionsResponses)
+
         QuestionsLoader(pr, { QuestionLoaderContext  ->
             def process = QuestionLoaderContext.process as CommandProcess
             def Questions = QuestionLoaderContext.questions as Map
@@ -78,7 +79,7 @@ class commandDialouge {
                     Closure chk = QuestionsResponses[QuestionKeySet[session.get('DiagCounter') as int]]
                     session.put('resp', buff.toString())
                     buff = Buffer.buffer()
-                    chk([process: process], { ctx ->
+                    chk([process: process,resp:session.get('resp')], { ctx ->
                         def InnerAnswerSet = session.get('ansAr') as Map
                         def InnerDiagCtr = session.get('DiagCounter') as int
                         if (ctx['valid']) {
