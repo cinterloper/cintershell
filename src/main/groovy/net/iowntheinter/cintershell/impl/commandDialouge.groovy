@@ -73,7 +73,8 @@ class commandDialouge {
             process.stdinHandler({ keyUp ->  // on each key press, fire this
                 if (keyUp != '\n' && keyUp != '\r') {
                     buff.appendString(keyUp)
-                    process.write(keyUp)
+                    if(!session.get('passwordMode'))
+                        process.write(keyUp)
                 } else {
                     def QuestionsResponses = session.get('QuestionsResponses') as Map
                     Closure chk = QuestionsResponses[QuestionKeySet[session.get('DiagCounter') as int]]

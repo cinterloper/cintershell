@@ -31,6 +31,7 @@ repositories {
 
 publishing {
     repositories {
+        mavenLocal()
         if (LOCAL_REPO_DIR && !LOCAL_REPO_DIR.allWhitespace)
             maven {
                 url "file://${LOCAL_REPO_DIR}"
@@ -55,7 +56,7 @@ publishing {
     }
 }
 
-version = '3.2.1-1'
+version = '3.2.1-14'
 def libversion = '3.2.1'
 sourceCompatibility = '1.8'
 
