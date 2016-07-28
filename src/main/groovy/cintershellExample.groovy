@@ -1,6 +1,7 @@
 // if invoked as a standalone application, this is the entrypoint
 // if used as a library, this file may be ignored
 import io.vertx.core.AbstractVerticle
+import io.vertx.core.AsyncResult
 import io.vertx.core.json.JsonObject
 import io.vertx.core.logging.LoggerFactory
 import io.vertx.core.Vertx
@@ -9,6 +10,7 @@ import io.vertx.ext.auth.shiro.ShiroAuthOptions
 import io.vertx.ext.auth.shiro.ShiroAuthRealmType
 import io.vertx.ext.shell.ShellServiceOptions
 import io.vertx.ext.shell.ShellServiceOptionsConverter
+import io.vertx.ext.shell.command.CommandRegistry
 import net.iowntheinter.cintershell.impl.OperatorConsole as SSHOperatorConsole
 import net.iowntheinter.cintershell.impl.commandDialouge
 import net.iowntheinter.cintershell.impl.cmds.example.TestDiag
@@ -20,12 +22,15 @@ public class cintershellExample extends AbstractVerticle {
 
     @Override
     public void start() throws Exception {
-        def  soc
+        def soc
         def port = 2244
         def logger = LoggerFactory.getLogger("userInterface")
         def auth = 'properties'
         def eb = vertx.eventBus();
         def JShiroOptions = new JsonObject()
+        def reg = CommandRegistry.getShared(vertx)
+
+
 
         if (auth == 'ldap') {
             JShiroOptions.put("type", ShiroAuthRealmType.LDAP)
@@ -63,6 +68,12 @@ public class cintershellExample extends AbstractVerticle {
 
         def sn = new commandDialouge(vertx, 'setup', TestDiag.INTRO, TestDiag.QUESTIONS, TestDiag.REACTIONS, TestDiag.FINISH)
         def os = new commandOneShot(vertx, 'shadowone', TestOneShot.INTRO, TestOneShot.COMMAND, TestOneShot.FINISH)
+        ["echo", "sleep", "cd", "pwd", "ls"].each { String cmd ->
+            reg.unregisterCommand(cmd, { AsyncResult res ->
+                if(res.failed())
+                    logger.error(res.cause())
+            })
+        }
     }
 
 }
