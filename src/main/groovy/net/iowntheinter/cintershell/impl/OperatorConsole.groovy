@@ -36,6 +36,7 @@ class OperatorConsole {
                 })
             } catch (e) {
                 logger.error("could not start shell server: ${e}")
+                e.printStackTrace()
 
             }
         })

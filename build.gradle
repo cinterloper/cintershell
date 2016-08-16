@@ -60,7 +60,7 @@ def libversion = '3.3.2'
 if(System.getenv("VERTX_VERSION") != null)
     libversion = System.getenv("VERTX_VERSION")
 
-version = "${libversion}-15"
+version = "${libversion}-16"
 sourceCompatibility = '1.8'
 
 dependencies {
