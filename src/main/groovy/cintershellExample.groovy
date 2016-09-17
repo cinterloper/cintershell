@@ -8,6 +8,8 @@ import io.vertx.core.Vertx
 import io.vertx.ext.auth.shiro.LDAPProviderConstants
 import io.vertx.ext.auth.shiro.ShiroAuthOptions
 import io.vertx.ext.auth.shiro.ShiroAuthRealmType
+import io.vertx.ext.shell.ShellServerOptions
+import io.vertx.ext.shell.ShellServerOptionsConverter
 import io.vertx.ext.shell.ShellServiceOptions
 import io.vertx.ext.shell.ShellServiceOptionsConverter
 import io.vertx.ext.shell.command.CommandRegistry
@@ -61,9 +63,8 @@ public class cintershellExample extends AbstractVerticle {
                         )
                                 .put("authOptions", JShiroOptions));
 
-        def ShellServiceOptions sso = new ShellServiceOptions();
-        ShellServiceOptionsConverter.fromJson(joptions, sso)
-        soc = new SSHOperatorConsole(vertx, sso)
+
+        soc = new SSHOperatorConsole(vertx, joptions)
 
 
         def sn = new commandDialouge(vertx, 'setup', TestDiag.INTRO, TestDiag.QUESTIONS, TestDiag.REACTIONS, TestDiag.FINISH)

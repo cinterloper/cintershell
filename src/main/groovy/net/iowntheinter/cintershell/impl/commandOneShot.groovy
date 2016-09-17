@@ -42,6 +42,7 @@ class commandOneShot {
         builder.processHandler(hdlr)
 
         // Register the command
+
         def registry = CommandRegistry.getShared(vertx)
         registry.registerCommand(builder.build(vertx))
         log = LoggerFactory.getLogger('net.iowntheinter.cintershell.impl.commandOneShot')

@@ -56,11 +56,11 @@ publishing {
     }
 }
 
-def libversion = '3.3.2'
+def libversion = '3.3.3'
 if(System.getenv("VERTX_VERSION") != null)
     libversion = System.getenv("VERTX_VERSION")
 
-version = "${libversion}-16"
+version = "${libversion}-17"
 sourceCompatibility = '1.8'
 
 dependencies {

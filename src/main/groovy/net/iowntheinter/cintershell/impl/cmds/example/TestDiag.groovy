@@ -46,6 +46,7 @@ class TestDiag {
         def eb = v.eventBus();
         eb.send('questions', new JsonObject(d))
         println("end of the line:${d}")
+        p.write('\n')
         p.end()
     }
 }
